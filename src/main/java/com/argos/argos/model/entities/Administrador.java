@@ -10,7 +10,7 @@ public class Administrador {
 
     private String nome;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "idLoginAcesso", referencedColumnName = "id")
     private LoginAcesso loginAcesso;
 
