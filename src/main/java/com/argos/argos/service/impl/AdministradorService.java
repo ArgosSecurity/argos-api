@@ -51,7 +51,7 @@ public class AdministradorService implements IAdministradorService {
     public Optional<Administrador> update(Administrador obj) {
         log.info(">>>> [AdministradorService update iniciado]");
         try{
-            Administrador entidade = administradorRepository.getOne(obj.getId());
+            Administrador entidade = administradorRepository.getReferenceById(obj.getId());
             updateData(entidade, obj);
             return Optional.of(administradorRepository.save(entidade));
         } catch (EntityNotFoundException e){

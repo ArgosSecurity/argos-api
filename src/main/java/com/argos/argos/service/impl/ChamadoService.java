@@ -51,7 +51,7 @@ public class ChamadoService implements IChamadoService {
     public Optional<Chamado> update(Chamado obj) {
         log.info(">>>> [ChamadoService update iniciado]");
         try{
-            Chamado entidade = chamadoRepository.getOne(obj.getId());
+            Chamado entidade = chamadoRepository.getReferenceById(obj.getId());
             updateData(entidade, obj);
             return Optional.of(chamadoRepository.save(entidade));
         } catch (EntityNotFoundException e){

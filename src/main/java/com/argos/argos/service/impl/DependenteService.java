@@ -51,7 +51,7 @@ public class DependenteService implements IDependenteService {
     public Optional<Dependente> update(Dependente obj) {
         log.info(">>>> [DependenteService update iniciado]");
         try{
-            Dependente entidade = dependenteRepository.getOne(obj.getId());
+            Dependente entidade = dependenteRepository.getReferenceById(obj.getId());
             updateData(entidade, obj);
             return Optional.of(dependenteRepository.save(entidade));
         } catch (EntityNotFoundException e){
