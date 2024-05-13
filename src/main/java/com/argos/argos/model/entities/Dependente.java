@@ -10,18 +10,17 @@ public class Dependente {
 
     private String nome;
     private String rg;
-    private String apto;
 
     @ManyToOne
     @JoinColumn(name = "idResponsavel", referencedColumnName = "id")
     private Responsavel responsavel;
 
-    public Dependente(){}
+    public Dependente() {
+    }
 
-    public Dependente(String nome, String rg, String apto, Responsavel responsavel) {
+    public Dependente(String nome, String rg, Responsavel responsavel) {
         this.nome = nome;
         this.rg = rg;
-        this.apto = apto;
         this.responsavel = responsavel;
     }
 
@@ -43,14 +42,6 @@ public class Dependente {
 
     public void setRg(String rg) {
         this.rg = rg;
-    }
-
-    public String getApto() {
-        return apto;
-    }
-
-    public void setApto(String apto) {
-        this.apto = apto;
     }
 
     public Responsavel getResponsavel() {

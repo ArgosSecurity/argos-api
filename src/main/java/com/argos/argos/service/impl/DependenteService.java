@@ -62,7 +62,6 @@ public class DependenteService implements IDependenteService {
     private void updateData(Dependente entidade, Dependente obj){
         entidade.setNome(obj.getNome());
         entidade.setRg(obj.getRg());
-        entidade.setApto(obj.getApto());
         entidade.setResponsavel(obj.getResponsavel());
         // Adicione aqui outros campos que você deseja atualizar
     }
