@@ -1,17 +1,13 @@
 package com.argos.argos.controller;
 
-import com.argos.argos.controller.response.HttpResponse;
 import com.argos.argos.model.entities.LoginAcesso;
 import com.argos.argos.service.impl.LoginAcessoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "api/v1/auth")
@@ -22,6 +18,20 @@ public class LoginAcessoAPIController {
 
     public LoginAcessoAPIController(LoginAcessoService loginAcessoService) {
         this.loginAcessoService = loginAcessoService;
+    }
+
+    @CrossOrigin
+    @GetMapping
+    @Transactional
+    public ResponseEntity<Boolean> getLoginAcesso(HttpServletRequest request){
+        log.info(">>>> [Controller] getLoginAcesso iniciado");
+
+
+        boolean auth = loginAcessoService.login(Long.parseLong(request.getHeader("acessoId")), request.getHeader("senha"));
+
+        log.info(">>>> " + request.getHeader("acessoId") + request.getHeader("senha"));
+
+        return ResponseEntity.ok().body(auth);
     }
 
     @CrossOrigin

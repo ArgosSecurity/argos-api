@@ -23,12 +23,14 @@ public class LoginAcessoService implements ILoginAcessoService {
     }
 
     @Override
-    public boolean login(String acessoId, String senha) {
+    public boolean login(Long acessoId, String senha) {
         log.info(">>>> [LoginAcessoService] findById(" + acessoId +") iniciado");
 
-//        Optional<LoginAcesso> loginAcesso = loginAcessoRepository.findById(id);
-//
-//        return Optional.ofNullable(loginAcesso.orElseThrow(() -> new ResourceNotFoundException(id)));
+        Optional<LoginAcesso> loginAcesso = loginAcessoRepository.findById(acessoId);
+
+        if(loginAcesso.isPresent()){
+            return loginAcesso.get().getSenhaAcesso().equals(senha);
+        }
         return false;
     }
 
