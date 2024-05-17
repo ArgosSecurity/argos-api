@@ -23,13 +23,10 @@ public class LoginAcessoAPIController {
     @CrossOrigin
     @GetMapping
     @Transactional
-    public ResponseEntity<Boolean> getLoginAcesso(HttpServletRequest request){
+    public ResponseEntity<Object> getLoginAcesso(HttpServletRequest request){
         log.info(">>>> [Controller] getLoginAcesso iniciado");
 
-
-        boolean auth = loginAcessoService.login(Long.parseLong(request.getHeader("acessoId")), request.getHeader("senha"));
-
-        log.info(">>>> " + request.getHeader("acessoId") + request.getHeader("senha"));
+        Object auth = loginAcessoService.login(request.getHeader("acessoId"), request.getHeader("senha"));
 
         return ResponseEntity.ok().body(auth);
     }

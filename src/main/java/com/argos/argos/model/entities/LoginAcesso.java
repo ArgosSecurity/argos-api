@@ -11,16 +11,26 @@ public class LoginAcesso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String idAcesso;
     private String senhaAcesso;
 
     public LoginAcesso(){}
 
-    public LoginAcesso(String senhaAcesso) {
+    public LoginAcesso(String idAcesso, String senhaAcesso) {
+        this.idAcesso = idAcesso;
         this.senhaAcesso = senhaAcesso;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getIdAcesso() {
+        return idAcesso;
+    }
+
+    public void setIdAcesso(String idAcesso) {
+        this.idAcesso = idAcesso;
     }
 
     public String getSenhaAcesso() {

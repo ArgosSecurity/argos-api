@@ -32,4 +32,12 @@ public class Administrador {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public LoginAcesso getLoginAcesso() {
+        return loginAcesso;
+    }
+
+    public void setLoginAcesso(LoginAcesso loginAcesso) {
+        this.loginAcesso = loginAcesso;
+    }
 }

@@ -63,7 +63,7 @@ public class ResponsavelService implements IResponsavelService {
         entidade.setNome(obj.getNome());
         entidade.setApto(obj.getApto());
         entidade.setRg(obj.getRg());
-        entidade.setDataNascimento(obj.getDataNascimento());
+        entidade.setDataNascimento(obj.getDataNascimento().toString());
         entidade.setLoginAcesso(obj.getLoginAcesso());
     }
 

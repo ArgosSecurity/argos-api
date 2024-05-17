@@ -2,6 +2,8 @@ package com.argos.argos.model.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
@@ -11,7 +13,7 @@ public class Responsavel {
    private Long id;
 
    private String nome;
-   private Date dataNascimento;
+   private LocalDate dataNascimento;
    private String rg;
    private String apto;
 
@@ -21,9 +23,9 @@ public class Responsavel {
 
    public Responsavel(){}
 
-   public Responsavel(String nome, Date dataNascimento, String rg, String apto, LoginAcesso loginAcesso) {
+   public Responsavel(String nome, String dataNascimento, String rg, String apto, LoginAcesso loginAcesso) {
       this.nome = nome;
-      this.dataNascimento = dataNascimento;
+      this.dataNascimento = LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("uuuu-MM-dd"));;
       this.rg = rg;
       this.apto = apto;
       this.loginAcesso = loginAcesso;
@@ -41,12 +43,12 @@ public class Responsavel {
       this.nome = nome;
    }
 
-   public Date getDataNascimento() {
+   public LocalDate getDataNascimento() {
       return dataNascimento;
    }
 
-   public void setDataNascimento(Date dataNascimento) {
-      this.dataNascimento = dataNascimento;
+   public void setDataNascimento(String dataNascimento) {
+      this.dataNascimento = LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("uuuu-MM-dd"));;
    }
 
    public String getRg() {
