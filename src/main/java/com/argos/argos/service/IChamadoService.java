@@ -10,7 +10,7 @@ public interface IChamadoService {
 
     public Optional<Chamado> findById(Long id);
 
-    public Optional<Chamado> insert(Chamado obj);
+    public Optional<Chamado> insert(Chamado obj, Long id);
 
     public Optional<Chamado> update(Chamado obj);
 

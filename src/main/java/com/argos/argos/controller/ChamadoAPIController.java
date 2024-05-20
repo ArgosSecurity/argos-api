@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,10 +48,10 @@ public class ChamadoAPIController {
     @CrossOrigin
     @PostMapping
     @Transactional
-    public ResponseEntity<Object> inserirChamado(@RequestBody Chamado chamado){
+    public ResponseEntity<Object> inserirChamado(@RequestParam(value = "userId") Long id ,@RequestBody Chamado chamado){
         log.info(">>>> [Controller] inserirChamado iniciado");
 
-        return ResponseEntity.ok().body(chamadoService.insert(chamado));
+        return ResponseEntity.ok().body(chamadoService.insert(chamado, id));
     }
 
     @CrossOrigin

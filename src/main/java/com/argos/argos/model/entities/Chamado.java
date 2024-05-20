@@ -21,6 +21,9 @@ public class Chamado {
     private TipoChamado tipoChamado;
 
     private String dependenteRg;
+    private String dependenteNome;
+
+    private String motivo;
 
     private boolean isTagTemporaria;
 
@@ -32,20 +35,18 @@ public class Chamado {
     @JoinColumn(name = "idResponsavel", referencedColumnName = "id")
     private Responsavel responsavel;
 
-    @ManyToOne
-    @JoinColumn(name = "idAdministrador", referencedColumnName = "id")
-    private Administrador administrador;
+    public Chamado() {
+    }
 
-    public Chamado(){}
-
-    public Chamado(TipoChamado tipoChamado, String dependenteRg, boolean isTagTemporaria, String horarioInicioTag, String horarioFimTag, Responsavel responsavel, Administrador administrador) {
+    public Chamado(TipoChamado tipoChamado, String dependenteRg, boolean isTagTemporaria, String horarioInicioTag, String horarioFimTag, Responsavel responsavel, Administrador administrador, String motivo, String dependenteNome) {
         this.tipoChamado = tipoChamado;
         this.dependenteRg = dependenteRg;
         this.isTagTemporaria = isTagTemporaria;
         this.horarioInicioTag = LocalDate.parse(horarioInicioTag, DateTimeFormatter.ofPattern("uuuu-MM-dd"));
         this.horarioFimTag = LocalDate.parse(horarioFimTag, DateTimeFormatter.ofPattern("uuuu-MM-dd"));
         this.responsavel = responsavel;
-        this.administrador = administrador;
+        this.motivo = motivo;
+        this.dependenteNome = dependenteNome;
     }
 
     public Long getId() {
@@ -100,11 +101,19 @@ public class Chamado {
         this.responsavel = responsavel;
     }
 
-    public Administrador getAdministrador() {
-        return administrador;
+    public String getMotivo() {
+        return motivo;
     }
 
-    public void setAdministrador(Administrador administrador) {
-        this.administrador = administrador;
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    public String getDependenteNome() {
+        return dependenteNome;
+    }
+
+    public void setDependenteNome(String dependenteNome) {
+        this.dependenteNome = dependenteNome;
     }
 }

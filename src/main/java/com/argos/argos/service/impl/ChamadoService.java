@@ -1,7 +1,11 @@
 package com.argos.argos.service.impl;
 
+import com.argos.argos.model.entities.Administrador;
 import com.argos.argos.model.entities.Chamado;
+import com.argos.argos.model.entities.Responsavel;
+import com.argos.argos.model.repositories.IAdministradorRepository;
 import com.argos.argos.model.repositories.IChamadoRepository;
+import com.argos.argos.model.repositories.IResponsavelRepository;
 import com.argos.argos.service.IChamadoService;
 import com.argos.argos.service.exception.DatabaseException;
 import com.argos.argos.service.exception.ResourceNotFoundException;
@@ -19,9 +23,11 @@ public class ChamadoService implements IChamadoService {
 
     private Logger log = LogManager.getLogger(ChamadoService.class);
     private final IChamadoRepository chamadoRepository;
+    private final IResponsavelRepository responsavelRepository;
 
-    public ChamadoService(IChamadoRepository chamadoRepository) {
+    public ChamadoService(IChamadoRepository chamadoRepository, IResponsavelRepository responsavelRepository) {
         this.chamadoRepository = chamadoRepository;
+        this.responsavelRepository = responsavelRepository;
     }
 
     @Override
@@ -41,10 +47,13 @@ public class ChamadoService implements IChamadoService {
     }
 
     @Override
-    public Optional<Chamado> insert(Chamado obj) {
+    public Optional<Chamado> insert(Chamado obj, Long id) {
         log.info(">>>> [ChamadoService] insert iniciado");
 
-        return Optional.of(chamadoRepository.save(obj));
+        Optional<Responsavel> responsavel = responsavelRepository.findById(id);
+        obj.setResponsavel(responsavel.get());
+
+        return Optional.ofNullable(chamadoRepository.save(obj));
     }
 
     @Override
@@ -66,7 +75,8 @@ public class ChamadoService implements IChamadoService {
         entidade.setHorarioInicioTag(obj.getHorarioInicioTag().toString());
         entidade.setHorarioFimTag(obj.getHorarioFimTag().toString());
         entidade.setResponsavel(obj.getResponsavel());
-        entidade.setAdministrador(obj.getAdministrador());
+        entidade.setMotivo(obj.getMotivo());
+        entidade.setDependenteNome(obj.getDependenteNome());
     }
 
     @Override
