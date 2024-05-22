@@ -1,6 +1,8 @@
 package com.argos.argos.service.impl;
 
+import com.argos.argos.model.entities.LoginAcesso;
 import com.argos.argos.model.entities.Responsavel;
+import com.argos.argos.model.repositories.ILoginAcessoRepository;
 import com.argos.argos.model.repositories.IResponsavelRepository;
 import com.argos.argos.service.IResponsavelService;
 import com.argos.argos.service.exception.DatabaseException;
@@ -19,9 +21,11 @@ public class ResponsavelService implements IResponsavelService {
 
     private Logger log = LogManager.getLogger(ResponsavelService.class);
     private final IResponsavelRepository responsavelRepository;
+    private final ILoginAcessoRepository loginAcessoRepository;
 
-    public ResponsavelService(IResponsavelRepository responsavelRepository) {
+    public ResponsavelService(IResponsavelRepository responsavelRepository, ILoginAcessoRepository loginAcessoRepository, ILoginAcessoRepository loginAcessoRepository1) {
         this.responsavelRepository = responsavelRepository;
+        this.loginAcessoRepository = loginAcessoRepository1;
     }
 
     @Override
@@ -44,6 +48,16 @@ public class ResponsavelService implements IResponsavelService {
     public Optional<Responsavel> insert(Responsavel obj) {
         log.info(">>>> [ResponsavelService] insert iniciado");
 
+        int loginUser = (int) (Math.random() * 10000);
+        int loginSenha = (int) (Math.random() * 10000);
+
+        log.info(">>>> [ResponsavelService] insert Responsavel login: " + loginUser + " senha: " + loginSenha);
+
+        LoginAcesso loginAcesso = new LoginAcesso(Integer.toString(loginUser), Integer.toString(loginSenha));
+        loginAcessoRepository.save(loginAcesso);
+
+        obj.setLoginAcesso(loginAcesso);
+
         return Optional.of(responsavelRepository.save(obj));
     }
 
@@ -63,7 +77,6 @@ public class ResponsavelService implements IResponsavelService {
         entidade.setNome(obj.getNome());
         entidade.setApto(obj.getApto());
         entidade.setRg(obj.getRg());
-        entidade.setDataNascimento(obj.getDataNascimento().toString());
         entidade.setLoginAcesso(obj.getLoginAcesso());
     }
 

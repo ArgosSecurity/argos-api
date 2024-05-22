@@ -41,7 +41,6 @@ public class LoadDatabase {
 
             Responsavel responsavel1 = new Responsavel(
                     "Fulano de Tal",
-                    "1990-04-07",
                     "123456789",
                     "Apto 101",
                     loginAcesso2

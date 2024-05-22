@@ -13,7 +13,6 @@ public class Responsavel {
    private Long id;
 
    private String nome;
-   private LocalDate dataNascimento;
    private String rg;
    private String apto;
 
@@ -23,9 +22,8 @@ public class Responsavel {
 
    public Responsavel(){}
 
-   public Responsavel(String nome, String dataNascimento, String rg, String apto, LoginAcesso loginAcesso) {
+   public Responsavel(String nome, String rg, String apto, LoginAcesso loginAcesso) {
       this.nome = nome;
-      this.dataNascimento = LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("uuuu-MM-dd"));;
       this.rg = rg;
       this.apto = apto;
       this.loginAcesso = loginAcesso;
@@ -41,14 +39,6 @@ public class Responsavel {
 
    public void setNome(String nome) {
       this.nome = nome;
-   }
-
-   public LocalDate getDataNascimento() {
-      return dataNascimento;
-   }
-
-   public void setDataNascimento(String dataNascimento) {
-      this.dataNascimento = LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("uuuu-MM-dd"));;
    }
 
    public String getRg() {
