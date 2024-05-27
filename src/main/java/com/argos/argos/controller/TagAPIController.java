@@ -45,6 +45,17 @@ public class TagAPIController {
     }
 
     @CrossOrigin
+    @GetMapping("/r/{id}")
+    @Transactional
+    public ResponseEntity<Object> consultaTagPorResponsavelId(@PathVariable Long id){
+        log.info(">>>> [Controller] consultaTagPorId iniciado");
+
+        Optional<Tag> tag = tagService.findByIdResponsavel(id);
+
+        return ResponseEntity.ok().body(tag);
+    }
+
+    @CrossOrigin
     @PostMapping
     @Transactional
     public ResponseEntity<Object> inserirTag(@RequestBody Tag tag){

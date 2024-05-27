@@ -1,7 +1,9 @@
 package com.argos.argos.service.impl;
 
 import com.argos.argos.model.entities.HistoricoTag;
+import com.argos.argos.model.entities.Tag;
 import com.argos.argos.model.repositories.IHistoricoTagRepository;
+import com.argos.argos.model.repositories.ITagRepository;
 import com.argos.argos.service.IHistoricoTagService;
 import com.argos.argos.service.exception.DatabaseException;
 import com.argos.argos.service.exception.ResourceNotFoundException;
@@ -19,9 +21,11 @@ public class HistoricoTagService implements IHistoricoTagService {
 
     private Logger log = LogManager.getLogger(HistoricoTagService.class);
     private final IHistoricoTagRepository historicoTagRepository;
+    private final ITagRepository tagRepository;
 
-    public HistoricoTagService(IHistoricoTagRepository historicoTagRepository) {
+    public HistoricoTagService(IHistoricoTagRepository historicoTagRepository, ITagRepository tagRepository) {
         this.historicoTagRepository = historicoTagRepository;
+        this.tagRepository = tagRepository;
     }
 
     @Override
@@ -41,10 +45,21 @@ public class HistoricoTagService implements IHistoricoTagService {
     }
 
     @Override
-    public Optional<HistoricoTag> insert(HistoricoTag obj) {
+    public List<HistoricoTag> findByIdTag(Long idTag) {
+        Optional<Tag> tag = tagRepository.findById(idTag);
+
+        return historicoTagRepository.findByTag(tag.get());
+    }
+
+    @Override
+    public Optional<HistoricoTag> insert(Tag tag) {
         log.info(">>>> [HistoricoTagService] insert iniciado");
 
-        return Optional.of(historicoTagRepository.save(obj));
+        tagRepository.findById(tag.getId());
+
+        HistoricoTag historicoTag = new HistoricoTag(tag);
+
+        return Optional.of(historicoTagRepository.save(historicoTag));
     }
 
     @Override
@@ -52,16 +67,12 @@ public class HistoricoTagService implements IHistoricoTagService {
         log.info(">>>> [HistoricoTagService update iniciado]");
         try{
             HistoricoTag entidade = historicoTagRepository.getReferenceById(obj.getId());
-            updateData(entidade, obj);
             return Optional.of(historicoTagRepository.save(entidade));
         } catch (EntityNotFoundException e){
             throw new ResourceNotFoundException(obj.getId());
         }
     }
 
-    private void updateData(HistoricoTag entidade, HistoricoTag obj){
-        entidade.setHorarioRegistro(obj.getHorarioRegistro());
-    }
 
     @Override
     public void delete(Long id) {
@@ -74,7 +85,6 @@ public class HistoricoTagService implements IHistoricoTagService {
     }
 
     private void deleteData(Long id){
-        Optional<HistoricoTag> historicoTag = findById(id);
         historicoTagRepository.deleteById(id);
     }
 }

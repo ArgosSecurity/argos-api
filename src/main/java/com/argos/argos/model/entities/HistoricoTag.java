@@ -1,9 +1,9 @@
 package com.argos.argos.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class HistoricoTag {
@@ -11,23 +11,31 @@ public class HistoricoTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String horarioRegistro;
+    private final LocalDateTime timestamp = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "idTag", referencedColumnName = "id")
+    private Tag tag;
 
     public HistoricoTag() {}
 
-    public HistoricoTag(String horarioRegistro) {
-        this.horarioRegistro = horarioRegistro;
+    public HistoricoTag(Tag tag) {
+        this.tag = tag;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getHorarioRegistro() {
-        return horarioRegistro;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
-    public void setHorarioRegistro(String horarioRegistro) {
-        this.horarioRegistro = horarioRegistro;
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
     }
 }

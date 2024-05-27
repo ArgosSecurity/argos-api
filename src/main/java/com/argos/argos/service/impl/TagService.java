@@ -1,6 +1,8 @@
 package com.argos.argos.service.impl;
 
+import com.argos.argos.model.entities.HistoricoTag;
 import com.argos.argos.model.entities.Tag;
+import com.argos.argos.model.repositories.IResponsavelRepository;
 import com.argos.argos.model.repositories.ITagRepository;
 import com.argos.argos.service.ITagService;
 import com.argos.argos.service.exception.DatabaseException;
@@ -19,9 +21,11 @@ public class TagService implements ITagService {
 
     private Logger log = LogManager.getLogger(TagService.class);
     private final ITagRepository tagRepository;
+    private final IResponsavelRepository responsavelRepository;
 
-    public TagService(ITagRepository tagRepository) {
+    public TagService(ITagRepository tagRepository, IResponsavelRepository responsavelRepository) {
         this.tagRepository = tagRepository;
+        this.responsavelRepository = responsavelRepository;
     }
 
     @Override
@@ -38,6 +42,22 @@ public class TagService implements ITagService {
         Optional<Tag> tag = tagRepository.findById(id);
 
         return Optional.ofNullable(tag.orElseThrow(() -> new ResourceNotFoundException(id)));
+    }
+
+    @Override
+    public Optional<Tag> findByIdResponsavel(Long idResponsavel) {
+        log.info(">>>> [TagService] insert iniciado");
+
+        responsavelRepository.findById(idResponsavel);
+        List<Tag> arrTag = tagRepository.findAll();
+
+        for (Tag tag : arrTag) {
+            if (tag.getResponsavel().getId() == idResponsavel) {
+                return Optional.of(tag);
+            }
+        }
+
+        return Optional.empty();
     }
 
     @Override
@@ -66,7 +86,6 @@ public class TagService implements ITagService {
         entidade.setHorarioInicio(obj.getHorarioInicio());
         entidade.setHorarioFim(obj.getHorarioFim());
         entidade.setIsTemporario(obj.getIsTemporario());
-        entidade.setHistoricoTag(obj.getHistoricoTag());
     }
 
     @Override

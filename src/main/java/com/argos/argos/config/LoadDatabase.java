@@ -1,12 +1,8 @@
 package com.argos.argos.config;
 
-import com.argos.argos.model.entities.Administrador;
-import com.argos.argos.model.entities.LoginAcesso;
-import com.argos.argos.model.entities.Responsavel;
-import com.argos.argos.model.repositories.IAdministradorRepository;
+import com.argos.argos.model.entities.*;
+import com.argos.argos.model.repositories.*;
 
-import com.argos.argos.model.repositories.ILoginAcessoRepository;
-import com.argos.argos.model.repositories.IResponsavelRepository;
 import com.argos.argos.service.ILoginAcessoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +21,9 @@ public class LoadDatabase {
     CommandLineRunner initDatabase(
             IAdministradorRepository administradorRepository,
             ILoginAcessoRepository loginAcessoRepository,
-            IResponsavelRepository responsavelRepository
+            IResponsavelRepository responsavelRepository,
+            ITagRepository tagRepository,
+            IHistoricoTagRepository historicoTagRepository
     ) {
         return args -> {
             // Criação e inserção do novo login de acesso
@@ -47,6 +45,20 @@ public class LoadDatabase {
                     );
 
             responsavelRepository.save(responsavel1);
+
+            Tag tag1 = new Tag(
+                    false,
+                    null,
+                    null,
+                    "AB2 A2C D4F 123",
+                    responsavel1,
+                    null
+            );
+
+            tagRepository.save(tag1);
+
+            HistoricoTag historico = new HistoricoTag(tag1);
+            historicoTagRepository.save(historico);
 
             log.info(">>>> [LoadDatabase] dados inseridos no Banco de dados");
         };

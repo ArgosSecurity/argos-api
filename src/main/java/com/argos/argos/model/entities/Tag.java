@@ -23,29 +23,21 @@ public class Tag {
     @JoinColumn(name = "idDependente", referencedColumnName = "id")
     private Dependente dependente;
 
-    @ManyToOne
-    @JoinColumn(name = "idHistoricoTag", referencedColumnName = "id")
-    private HistoricoTag historicoTag;
 
     public Tag() {
     }
 
-    public Tag(boolean isTemporario, LocalDate horarioInicio, LocalDate horarioFim, String codRegistroTag, Responsavel responsavel, Dependente dependente, HistoricoTag historicoTag) {
+    public Tag(boolean isTemporario, LocalDate horarioInicio, LocalDate horarioFim, String codRegistroTag, Responsavel responsavel, Dependente dependente) {
         this.isTemporario = isTemporario;
         this.horarioInicio = horarioInicio;
         this.horarioFim = horarioFim;
         this.codRegistroTag = codRegistroTag;
         this.responsavel = responsavel;
         this.dependente = dependente;
-        this.historicoTag = historicoTag;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public boolean getIsTemporario() {
@@ -96,11 +88,4 @@ public class Tag {
         this.dependente = dependente;
     }
 
-    public HistoricoTag getHistoricoTag() {
-        return historicoTag;
-    }
-
-    public void setHistoricoTag(HistoricoTag historicoTag) {
-        this.historicoTag = historicoTag;
-    }
 }

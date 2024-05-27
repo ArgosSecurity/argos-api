@@ -2,6 +2,7 @@ package com.argos.argos.controller;
 
 import com.argos.argos.controller.response.HttpResponse;
 import com.argos.argos.model.entities.HistoricoTag;
+import com.argos.argos.model.entities.Tag;
 import com.argos.argos.service.impl.HistoricoTagService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -11,10 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "api/v1/historicotag")
+@RequestMapping(value = "api/v1/historico")
 public class HistoricoTagAPIController {
 
     private final HistoricoTagService historicoTagService;
@@ -45,12 +47,23 @@ public class HistoricoTagAPIController {
     }
 
     @CrossOrigin
+    @GetMapping("/tag/{id}")
+    @Transactional
+    public ResponseEntity<Object> getHistoricoTagByTagId(@PathVariable Long id){
+        log.info(">>>> [Controller] consultaHistoricoTagPorId iniciado");
+
+        List<HistoricoTag> historicoTag = historicoTagService.findByIdTag(id);
+
+        return ResponseEntity.ok().body(historicoTag);
+    }
+
+    @CrossOrigin
     @PostMapping
     @Transactional
-    public ResponseEntity<Object> inserirHistoricoTag(@RequestBody HistoricoTag historicoTag){
+    public ResponseEntity<Object> inserirHistoricoTag(@RequestBody Tag tag){
         log.info(">>>> [Controller] inserirHistoricoTag iniciado");
 
-        return ResponseEntity.ok().body(historicoTagService.insert(historicoTag));
+        return ResponseEntity.ok().body(historicoTagService.insert(tag));
     }
 
     @CrossOrigin

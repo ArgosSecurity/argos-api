@@ -10,6 +10,8 @@ public interface ITagService {
 
     public Optional<Tag> findById(Long id);
 
+    public Optional<Tag> findByIdResponsavel(Long idResponsavel);
+
     public Optional<Tag> insert(Tag obj);
 
     public Optional<Tag> update(Tag obj);
