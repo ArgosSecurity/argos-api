@@ -10,15 +10,13 @@ public class Trancas {
 
     private Long idRegistroTranca;
 
-    @OneToOne
-    @JoinColumn(name = "idLocalidades", referencedColumnName = "id")
-    private Localidades localidades;
+    private String localidade;
 
     public Trancas() {}
 
-    public Trancas(Long idRegistroTranca, Localidades localidades) {
+    public Trancas(Long idRegistroTranca, String localidades) {
         this.idRegistroTranca = idRegistroTranca;
-        this.localidades = localidades;
+        this.localidade = localidade;
     }
 
     public Long getId() {
@@ -33,11 +31,11 @@ public class Trancas {
         this.idRegistroTranca = idRegistroTranca;
     }
 
-    public Localidades getLocalidades() {
-        return localidades;
+    public String getLocalidade() {
+        return localidade;
     }
 
-    public void setLocalidades(Localidades localidades) {
-        this.localidades = localidades;
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
     }
 }

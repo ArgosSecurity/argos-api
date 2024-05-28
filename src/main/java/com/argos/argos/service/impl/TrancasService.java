@@ -61,7 +61,7 @@ public class TrancasService implements ITrancasService {
 
     private void updateData(Trancas entidade, Trancas obj){
         entidade.setIdRegistroTranca(obj.getIdRegistroTranca());
-        entidade.setLocalidades(obj.getLocalidades());
+        entidade.setLocalidade(obj.getLocalidade());
     }
 
     @Override
