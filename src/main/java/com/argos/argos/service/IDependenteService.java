@@ -10,7 +10,7 @@ public interface IDependenteService {
 
     public Optional<Dependente> findById(Long id);
 
-    public Optional<Dependente> insert(Dependente obj);
+    public Optional<Dependente> insert(Dependente obj, String apto);
 
     public Optional<Dependente> update(Dependente obj);
 

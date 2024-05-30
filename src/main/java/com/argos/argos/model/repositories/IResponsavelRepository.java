@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IResponsavelRepository extends JpaRepository<Responsavel, Long> {
-
+    public Responsavel findByApto(String apto);
 }

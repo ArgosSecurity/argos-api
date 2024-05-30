@@ -40,7 +40,7 @@ public class LoadDatabase {
             Responsavel responsavel1 = new Responsavel(
                     "Fulano de Tal",
                     "123456789",
-                    "Apto 101",
+                    "101",
                     loginAcesso2
                     );
 

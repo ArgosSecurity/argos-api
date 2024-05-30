@@ -1,7 +1,9 @@
 package com.argos.argos.service.impl;
 
 import com.argos.argos.model.entities.Dependente;
+import com.argos.argos.model.entities.Responsavel;
 import com.argos.argos.model.repositories.IDependenteRepository;
+import com.argos.argos.model.repositories.IResponsavelRepository;
 import com.argos.argos.service.IDependenteService;
 import com.argos.argos.service.exception.DatabaseException;
 import com.argos.argos.service.exception.ResourceNotFoundException;
@@ -19,9 +21,11 @@ public class DependenteService implements IDependenteService {
 
     private Logger log = LogManager.getLogger(DependenteService.class);
     private final IDependenteRepository dependenteRepository;
+    private final IResponsavelRepository responsavelRepository;
 
-    public DependenteService(IDependenteRepository dependenteRepository) {
+    public DependenteService(IDependenteRepository dependenteRepository, IResponsavelRepository responsavelRepository) {
         this.dependenteRepository = dependenteRepository;
+        this.responsavelRepository = responsavelRepository;
     }
 
     @Override
@@ -41,8 +45,14 @@ public class DependenteService implements IDependenteService {
     }
 
     @Override
-    public Optional<Dependente> insert(Dependente obj) {
+    public Optional<Dependente> insert(Dependente obj, String apto) {
         log.info(">>>> [DependenteService] insert iniciado");
+
+        log.info(apto);
+
+        Optional<Responsavel> responsavel = Optional.ofNullable(responsavelRepository.findByApto(apto));
+
+        obj.setResponsavel(responsavel.orElseThrow(() -> new ResourceNotFoundException(0L)));
 
         return Optional.of(dependenteRepository.save(obj));
     }
@@ -62,8 +72,6 @@ public class DependenteService implements IDependenteService {
     private void updateData(Dependente entidade, Dependente obj){
         entidade.setNome(obj.getNome());
         entidade.setRg(obj.getRg());
-        entidade.setResponsavel(obj.getResponsavel());
-        // Adicione aqui outros campos que você deseja atualizar
     }
 
     @Override

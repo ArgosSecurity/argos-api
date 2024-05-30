@@ -47,10 +47,10 @@ public class DependenteAPIController {
     @CrossOrigin
     @PostMapping
     @Transactional
-    public ResponseEntity<Object> inserirDependente(@RequestBody Dependente dependente){
+    public ResponseEntity<Object> inserirDependente(@RequestBody Dependente dependente, @RequestParam String apto){
         log.info(">>>> [Controller] inserirDependente iniciado");
 
-        return ResponseEntity.ok().body(dependenteService.insert(dependente));
+        return ResponseEntity.ok().body(dependenteService.insert(dependente, apto));
     }
 
     @CrossOrigin
