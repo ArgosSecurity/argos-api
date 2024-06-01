@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -50,9 +51,7 @@ public class TagAPIController {
     public ResponseEntity<Object> consultaTagPorResponsavelId(@PathVariable Long id){
         log.info(">>>> [Controller] consultaTagPorId iniciado");
 
-        Optional<Tag> tag = tagService.findByIdResponsavel(id);
-
-        return ResponseEntity.ok().body(tag);
+        return ResponseEntity.ok().body(tagService.findByIdResponsavel(id));
     }
 
     @CrossOrigin

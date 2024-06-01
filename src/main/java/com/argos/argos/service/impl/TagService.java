@@ -1,6 +1,7 @@
 package com.argos.argos.service.impl;
 
 import com.argos.argos.model.entities.HistoricoTag;
+import com.argos.argos.model.entities.Responsavel;
 import com.argos.argos.model.entities.Tag;
 import com.argos.argos.model.repositories.IResponsavelRepository;
 import com.argos.argos.model.repositories.ITagRepository;
@@ -45,19 +46,13 @@ public class TagService implements ITagService {
     }
 
     @Override
-    public Optional<Tag> findByIdResponsavel(Long idResponsavel) {
+    public List<Tag> findByIdResponsavel(Long idResponsavel) {
         log.info(">>>> [TagService] insert iniciado");
 
-        responsavelRepository.findById(idResponsavel);
-        List<Tag> arrTag = tagRepository.findAll();
+        Optional<Responsavel> responsavel = responsavelRepository.findById(idResponsavel);
+        List<Tag> arrTag = tagRepository.findAllByResponsavel(responsavel.get());
 
-        for (Tag tag : arrTag) {
-            if (tag.getResponsavel().getId() == idResponsavel) {
-                return Optional.of(tag);
-            }
-        }
-
-        return Optional.empty();
+        return arrTag;
     }
 
     @Override
