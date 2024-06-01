@@ -13,14 +13,19 @@ public class HistoricoTag {
 
     private final LocalDateTime timestamp = LocalDateTime.now();
 
-    @ManyToOne
-    @JoinColumn(name = "idTag", referencedColumnName = "id")
-    private Tag tag;
+    private Long tagID;
+    private String responsavel;
+    private String rgResponsavel;
+    private String typeAtividade;
 
-    public HistoricoTag() {}
+    public HistoricoTag() {
+    }
 
-    public HistoricoTag(Tag tag) {
-        this.tag = tag;
+    public HistoricoTag(Long tagID, String responsavel, String rgResponsavel, String typeAtividade) {
+        this.tagID = tagID;
+        this.responsavel = responsavel;
+        this.rgResponsavel = rgResponsavel;
+        this.typeAtividade = typeAtividade;
     }
 
     public Long getId() {
@@ -31,11 +36,35 @@ public class HistoricoTag {
         return timestamp;
     }
 
-    public Tag getTag() {
-        return tag;
+    public Long getTag() {
+        return tagID;
     }
 
-    public void setTag(Tag tag) {
-        this.tag = tag;
+    public void setTag(Long tagID) {
+        this.tagID = tagID;
+    }
+
+    public String getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(String responsavel) {
+        this.responsavel = responsavel;
+    }
+
+    public String getRgResponsavel() {
+        return rgResponsavel;
+    }
+
+    public void setRgResponsavel(String rgResponsavel) {
+        this.rgResponsavel = rgResponsavel;
+    }
+
+    public String getTypeAtividade() {
+        return typeAtividade;
+    }
+
+    public void setTypeAtividade(String typeAtividade) {
+        this.typeAtividade = typeAtividade;
     }
 }

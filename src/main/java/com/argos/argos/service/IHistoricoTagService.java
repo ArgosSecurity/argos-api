@@ -14,7 +14,7 @@ public interface IHistoricoTagService {
 
     public List<HistoricoTag> findByIdTag(Long idTag);
 
-    public Optional<HistoricoTag> insert(Tag tag);
+    public Optional<HistoricoTag> insertHistorico(Tag tag);
 
     public Optional<HistoricoTag> update(HistoricoTag obj);
 

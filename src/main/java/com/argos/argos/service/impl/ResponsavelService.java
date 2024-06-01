@@ -2,8 +2,10 @@ package com.argos.argos.service.impl;
 
 import com.argos.argos.model.entities.LoginAcesso;
 import com.argos.argos.model.entities.Responsavel;
+import com.argos.argos.model.repositories.IDependenteRepository;
 import com.argos.argos.model.repositories.ILoginAcessoRepository;
 import com.argos.argos.model.repositories.IResponsavelRepository;
+import com.argos.argos.model.repositories.ITagRepository;
 import com.argos.argos.service.IResponsavelService;
 import com.argos.argos.service.exception.DatabaseException;
 import com.argos.argos.service.exception.ResourceNotFoundException;
@@ -22,10 +24,14 @@ public class ResponsavelService implements IResponsavelService {
     private Logger log = LogManager.getLogger(ResponsavelService.class);
     private final IResponsavelRepository responsavelRepository;
     private final ILoginAcessoRepository loginAcessoRepository;
+    private final IDependenteRepository dependenteRepository;
+    private final ITagRepository tagRepository;
 
-    public ResponsavelService(IResponsavelRepository responsavelRepository, ILoginAcessoRepository loginAcessoRepository, ILoginAcessoRepository loginAcessoRepository1) {
+    public ResponsavelService(IResponsavelRepository responsavelRepository, ILoginAcessoRepository loginAcessoRepository, ILoginAcessoRepository loginAcessoRepository1, IDependenteRepository dependenteRepository, ITagRepository tagRepository) {
         this.responsavelRepository = responsavelRepository;
         this.loginAcessoRepository = loginAcessoRepository1;
+        this.dependenteRepository = dependenteRepository;
+        this.tagRepository = tagRepository;
     }
 
     @Override
@@ -91,6 +97,12 @@ public class ResponsavelService implements IResponsavelService {
 
     private void deleteData(Long id){
         Optional<Responsavel> responsavel = findById(id);
+
+        if (responsavel.isPresent()){
+            dependenteRepository.deleteAllByResponsavel(responsavel.get());
+            tagRepository.deleteAllByResponsavel(responsavel.get());
+        }
+
         responsavelRepository.deleteById(id);
     }
 }

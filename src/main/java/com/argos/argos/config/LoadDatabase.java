@@ -57,7 +57,7 @@ public class LoadDatabase {
 
             tagRepository.save(tag1);
 
-            HistoricoTag historico = new HistoricoTag(tag1);
+            HistoricoTag historico = new HistoricoTag(tag1.getId(), responsavel1.getNome(), responsavel1.getRg(), "CADASTRO");
             historicoTagRepository.save(historico);
 
             log.info(">>>> [LoadDatabase] dados inseridos no Banco de dados");

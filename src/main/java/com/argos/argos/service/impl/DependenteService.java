@@ -4,6 +4,7 @@ import com.argos.argos.model.entities.Dependente;
 import com.argos.argos.model.entities.Responsavel;
 import com.argos.argos.model.repositories.IDependenteRepository;
 import com.argos.argos.model.repositories.IResponsavelRepository;
+import com.argos.argos.model.repositories.ITagRepository;
 import com.argos.argos.service.IDependenteService;
 import com.argos.argos.service.exception.DatabaseException;
 import com.argos.argos.service.exception.ResourceNotFoundException;
@@ -22,10 +23,12 @@ public class DependenteService implements IDependenteService {
     private Logger log = LogManager.getLogger(DependenteService.class);
     private final IDependenteRepository dependenteRepository;
     private final IResponsavelRepository responsavelRepository;
+    private final ITagRepository tagRepository;
 
-    public DependenteService(IDependenteRepository dependenteRepository, IResponsavelRepository responsavelRepository) {
+    public DependenteService(IDependenteRepository dependenteRepository, IResponsavelRepository responsavelRepository, ITagRepository tagRepository) {
         this.dependenteRepository = dependenteRepository;
         this.responsavelRepository = responsavelRepository;
+        this.tagRepository = tagRepository;
     }
 
     @Override
@@ -86,6 +89,9 @@ public class DependenteService implements IDependenteService {
 
     private void deleteData(Long id){
         Optional<Dependente> dependente = findById(id);
+        if (dependente.isPresent()){
+            tagRepository.deleteAllByDependente(dependente.get());
+        }
         dependenteRepository.deleteById(id);
     }
 }

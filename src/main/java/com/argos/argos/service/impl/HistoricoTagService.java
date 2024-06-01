@@ -48,16 +48,20 @@ public class HistoricoTagService implements IHistoricoTagService {
     public List<HistoricoTag> findByIdTag(Long idTag) {
         Optional<Tag> tag = tagRepository.findById(idTag);
 
-        return historicoTagRepository.findByTag(tag.get());
+        return historicoTagRepository.findByTagID(tag.get().getId());
     }
 
     @Override
-    public Optional<HistoricoTag> insert(Tag tag) {
+    public Optional<HistoricoTag> insertHistorico(Tag tag) {
         log.info(">>>> [HistoricoTagService] insert iniciado");
 
-        tagRepository.findById(tag.getId());
+        HistoricoTag historicoTag;
 
-        HistoricoTag historicoTag = new HistoricoTag(tag);
+        if (tag.getResponsavel() != null) {
+            historicoTag = new HistoricoTag(tag.getId(), tag.getResponsavel().getNome(), tag.getResponsavel().getRg(), "CADASTRO" );
+        } else {
+            historicoTag = new HistoricoTag(tag.getId(), tag.getDependente().getResponsavel().getNome(), tag.getDependente().getResponsavel().getRg(), "CADASTRO" );
+        }
 
         return Optional.of(historicoTagRepository.save(historicoTag));
     }

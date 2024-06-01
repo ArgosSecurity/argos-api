@@ -63,7 +63,7 @@ public class HistoricoTagAPIController {
     public ResponseEntity<Object> inserirHistoricoTag(@RequestBody Tag tag){
         log.info(">>>> [Controller] inserirHistoricoTag iniciado");
 
-        return ResponseEntity.ok().body(historicoTagService.insert(tag));
+        return ResponseEntity.ok().body(historicoTagService.insertHistorico(tag));
     }
 
     @CrossOrigin
