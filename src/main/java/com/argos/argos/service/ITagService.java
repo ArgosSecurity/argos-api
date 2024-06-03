@@ -12,7 +12,7 @@ public interface ITagService {
 
     public List<Tag> findByIdResponsavel(Long idResponsavel);
 
-    public Optional<Tag> insert(Tag obj);
+    public Optional<Tag> insert(Tag obj, Long idResponsavel);
 
     public Optional<Tag> update(Tag obj);
 

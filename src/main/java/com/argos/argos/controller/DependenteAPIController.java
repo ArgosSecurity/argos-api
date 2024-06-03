@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -40,6 +41,17 @@ public class DependenteAPIController {
         log.info(">>>> [Controller] consultaDependentePorId iniciado");
 
         Optional<Dependente> dependente = dependenteService.findById(id);
+
+        return ResponseEntity.ok().body(dependente);
+    }
+
+    @CrossOrigin
+    @GetMapping("/r/{id}")
+    @Transactional
+    public ResponseEntity<Object> consultaDependentePorIdResponsavel(@PathVariable Long id){
+        log.info(">>>> [Controller] consultaDependentePorId iniciado");
+
+        List<Dependente> dependente = dependenteService.findByResponsavel(id);
 
         return ResponseEntity.ok().body(dependente);
     }

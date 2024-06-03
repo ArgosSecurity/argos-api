@@ -1,8 +1,11 @@
 package com.argos.argos.service.impl;
 
+import com.argos.argos.model.entities.Dependente;
 import com.argos.argos.model.entities.HistoricoTag;
 import com.argos.argos.model.entities.Responsavel;
 import com.argos.argos.model.entities.Tag;
+import com.argos.argos.model.repositories.IDependenteRepository;
+import com.argos.argos.model.repositories.IHistoricoTagRepository;
 import com.argos.argos.model.repositories.IResponsavelRepository;
 import com.argos.argos.model.repositories.ITagRepository;
 import com.argos.argos.service.ITagService;
@@ -23,10 +26,14 @@ public class TagService implements ITagService {
     private Logger log = LogManager.getLogger(TagService.class);
     private final ITagRepository tagRepository;
     private final IResponsavelRepository responsavelRepository;
+    private final IDependenteRepository dependenteRepository;
+    private final IHistoricoTagRepository historicoTagRepository;
 
-    public TagService(ITagRepository tagRepository, IResponsavelRepository responsavelRepository) {
+    public TagService(ITagRepository tagRepository, IResponsavelRepository responsavelRepository, IDependenteRepository dependenteRepository, IHistoricoTagRepository historicoTagRepository) {
         this.tagRepository = tagRepository;
         this.responsavelRepository = responsavelRepository;
+        this.dependenteRepository = dependenteRepository;
+        this.historicoTagRepository = historicoTagRepository;
     }
 
     @Override
@@ -56,8 +63,14 @@ public class TagService implements ITagService {
     }
 
     @Override
-    public Optional<Tag> insert(Tag obj) {
+    public Optional<Tag> insert(Tag obj, Long idResponsavel) {
         log.info(">>>> [TagService] insert iniciado");
+
+        Optional<Responsavel> responsavel = responsavelRepository.findById(idResponsavel);
+        obj.setResponsavel(responsavel.get());
+
+        HistoricoTag historico = new HistoricoTag(obj.getId(), obj.getResponsavel().getNome(), obj.getResponsavel().getRg(), "CADASTRO");
+        historicoTagRepository.save(historico);
 
         return Optional.of(tagRepository.save(obj));
     }

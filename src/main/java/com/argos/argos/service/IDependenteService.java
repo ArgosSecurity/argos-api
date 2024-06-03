@@ -10,6 +10,8 @@ public interface IDependenteService {
 
     public Optional<Dependente> findById(Long id);
 
+    public List<Dependente> findByResponsavel(Long id);
+
     public Optional<Dependente> insert(Dependente obj, String apto);
 
     public Optional<Dependente> update(Dependente obj);

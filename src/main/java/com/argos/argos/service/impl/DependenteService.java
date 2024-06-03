@@ -48,6 +48,15 @@ public class DependenteService implements IDependenteService {
     }
 
     @Override
+    public List<Dependente> findByResponsavel(Long id) {
+        log.info(">>>> [DependenteService] findByResponsavel(" + id +") iniciado");
+
+        Optional<Responsavel> responsavel = responsavelRepository.findById(id);
+
+        return dependenteRepository.findAllByResponsavel(responsavel.get());
+    }
+
+    @Override
     public Optional<Dependente> insert(Dependente obj, String apto) {
         log.info(">>>> [DependenteService] insert iniciado");
 
