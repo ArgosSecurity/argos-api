@@ -23,7 +23,8 @@ public class LoadDatabase {
             ILoginAcessoRepository loginAcessoRepository,
             IResponsavelRepository responsavelRepository,
             ITagRepository tagRepository,
-            IHistoricoTagRepository historicoTagRepository
+            IHistoricoTagRepository historicoTagRepository,
+            IDependenteRepository dependenteRepository
     ) {
         return args -> {
             // Criação e inserção do novo login de acesso
@@ -59,6 +60,14 @@ public class LoadDatabase {
 
             HistoricoTag historico = new HistoricoTag(tag1.getId(), responsavel1.getNome(), responsavel1.getRg(), "CADASTRO");
             historicoTagRepository.save(historico);
+
+            Dependente dependente = new Dependente(
+                    "Daniel Xavier",
+                    "9348454533",
+                    responsavel1
+            );
+
+            dependenteRepository.save(dependente);
 
             log.info(">>>> [LoadDatabase] dados inseridos no Banco de dados");
         };

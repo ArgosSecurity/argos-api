@@ -54,10 +54,20 @@ public class TagService implements ITagService {
 
     @Override
     public List<Tag> findByIdResponsavel(Long idResponsavel) {
-        log.info(">>>> [TagService] insert iniciado");
+        log.info(">>>> [TagService] find iniciado");
 
         Optional<Responsavel> responsavel = responsavelRepository.findById(idResponsavel);
         List<Tag> arrTag = tagRepository.findAllByResponsavel(responsavel.get());
+
+        return arrTag;
+    }
+
+    @Override
+    public List<Tag> findByIdDendente(Long idDependente) {
+        log.info(">>>> [TagService] insert iniciado");
+
+        Optional<Dependente> dependente = dependenteRepository.findById(idDependente);
+        List<Tag> arrTag = tagRepository.findAllByDependente(dependente.get());
 
         return arrTag;
     }
@@ -94,6 +104,18 @@ public class TagService implements ITagService {
         entidade.setHorarioInicio(obj.getHorarioInicio());
         entidade.setHorarioFim(obj.getHorarioFim());
         entidade.setIsTemporario(obj.getIsTemporario());
+    }
+
+    @Override
+    public Optional<Tag> updateTagByDependente(Tag obj, Long idDependente) {
+        log.info(">>>> [updateTagByDependente iniciado]");
+
+        Tag entidade = tagRepository.getReferenceById(obj.getId());
+        Optional<Dependente> dependente = dependenteRepository.findById(idDependente);
+
+        entidade.setDependente(dependente.get());
+
+        return Optional.of(tagRepository.save(entidade));
     }
 
     @Override

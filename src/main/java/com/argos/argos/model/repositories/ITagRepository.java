@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface ITagRepository extends JpaRepository<Tag, Long> {
     public List<Tag> findAllByResponsavel(Responsavel responsavel);
+    public List<Tag> findAllByDependente(Dependente dependente);
     public void deleteAllByResponsavel(Responsavel responsavel);
     public void deleteAllByDependente(Dependente dependente);
 }

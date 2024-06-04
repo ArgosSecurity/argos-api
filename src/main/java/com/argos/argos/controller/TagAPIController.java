@@ -29,7 +29,7 @@ public class TagAPIController {
     @CrossOrigin
     @GetMapping
     @Transactional
-    public ResponseEntity<Object> consultaTag(){
+    public ResponseEntity<Object> consultaTag() {
         log.info(">>>> [Controller] consultaTag iniciado");
 
         return ResponseEntity.ok().body(tagService.find());
@@ -38,7 +38,7 @@ public class TagAPIController {
     @CrossOrigin
     @GetMapping("/{id}")
     @Transactional
-    public ResponseEntity<Object> consultaTagPorId(@PathVariable Long id){
+    public ResponseEntity<Object> consultaTagPorId(@PathVariable Long id) {
         log.info(">>>> [Controller] consultaTagPorId iniciado");
 
         Optional<Tag> tag = tagService.findById(id);
@@ -49,16 +49,26 @@ public class TagAPIController {
     @CrossOrigin
     @GetMapping("/r/{id}")
     @Transactional
-    public ResponseEntity<Object> consultaTagPorResponsavelId(@PathVariable Long id){
+    public ResponseEntity<Object> consultaTagPorResponsavelId(@PathVariable Long id) {
         log.info(">>>> [Controller] consultaTagPorId iniciado");
 
         return ResponseEntity.ok().body(tagService.findByIdResponsavel(id));
     }
 
     @CrossOrigin
+    @GetMapping("/d/{id}")
+    @Transactional
+    public ResponseEntity<Object> consultaTagPorDependentelId(@PathVariable Long id) {
+        log.info(">>>> [Controller] consultaTagPorId iniciado");
+
+        return ResponseEntity.ok().body(tagService.findByIdDendente(id));
+    }
+
+    @CrossOrigin
     @PostMapping
     @Transactional
-    public ResponseEntity<Object> inserirTag(@RequestParam(name = "responsavel") Long responsavel, @RequestBody Tag tag){
+    public ResponseEntity<Object> inserirTag(@RequestParam(name = "responsavel") Long responsavel,
+            @RequestBody Tag tag) {
         log.info(">>>> [Controller] inserirTag iniciado");
 
         return ResponseEntity.ok().body(tagService.insert(tag, responsavel));
@@ -67,23 +77,33 @@ public class TagAPIController {
     @CrossOrigin
     @PatchMapping
     @Transactional
-    public ResponseEntity<Object> updateTag(@RequestBody Tag tag){
+    public ResponseEntity<Object> updateTag(@RequestBody Tag tag) {
         log.info(">>>> [Controller] updateTag iniciado");
 
         return ResponseEntity.ok().body(tagService.update(tag));
     }
 
     @CrossOrigin
+    @PatchMapping("/d/{idDependente}")
+    @Transactional
+    public ResponseEntity<Object> updateTagDependente(@PathVariable Long idDependente, @RequestBody Tag tag) {
+        log.info(">>>> [Controller] updateTag iniciado");
+
+        return ResponseEntity.ok().body(tagService.updateTagByDependente(tag, idDependente));
+    }
+
+
+    @CrossOrigin
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<Object> deleteTag(@PathVariable Long id, HttpServletRequest request){
+    public ResponseEntity<Object> deleteTag(@PathVariable Long id, HttpServletRequest request) {
         log.info(">>>> [Controller] deleteTag iniciado");
 
         tagService.delete(id);
         HttpResponse response = new HttpResponse();
 
         response.setStatus(HttpStatus.OK);
-        response.setMessage("Tag id: " + id +" deletado com sucesso");
+        response.setMessage("Tag id: " + id + " deletado com sucesso");
         response.setPath(request.getRequestURI());
 
         return ResponseEntity.ok(response);
